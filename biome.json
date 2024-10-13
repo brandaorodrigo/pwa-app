@@ -1,0 +1,78 @@
+{
+    "$schema": "https://biomejs.dev/schemas/1.8.3/schema.json",
+    "formatter": {
+        "enabled": true,
+        "indentStyle": "space",
+        "indentWidth": 4,
+        "lineEnding": "lf",
+        "lineWidth": 100
+    },
+    "javascript": {
+        "formatter": {
+            "jsxQuoteStyle": "single",
+            "quoteStyle": "single"
+        }
+    },
+    "linter": {
+        "enabled": true,
+        "rules": {
+            "recommended": true,
+            "a11y": {
+                "useKeyWithClickEvents": "off"
+            },
+            "complexity": {
+                "useOptionalChain": "error"
+            },
+            "correctness": {
+                "useExhaustiveDependencies": "off"
+            },
+            "performance": {
+                "noDelete": "off"
+            },
+            "security": {
+                "noDangerouslySetInnerHtml": "off"
+            },
+            "style": {
+                "noUnusedTemplateLiteral": {
+                    "fix": "safe",
+                    "level": "error"
+                },
+                "noUselessElse": {
+                    "fix": "safe",
+                    "level": "error"
+                },
+                "useBlockStatements": {
+                    "fix": "safe",
+                    "level": "error"
+                },
+                "useSelfClosingElements": {
+                    "fix": "safe",
+                    "level": "error"
+                },
+                "useTemplate": {
+                    "fix": "safe",
+                    "level": "error"
+                }
+            },
+            "suspicious": {
+                "noConsoleLog": "warn",
+                "noDoubleEquals": {
+                    "fix": "safe",
+                    "level": "error"
+                },
+                "noExplicitAny": "off"
+            }
+        }
+    },
+    "files": {
+        "ignore": [".git", "dist", "node_module", "*.js", "*.json", "*.scss", ".css"]
+    },
+    "overrides": [
+        {
+            "include": ["src/Routes.tsx"],
+            "formatter": {
+                "lineWidth": 320
+            }
+        }
+    ]
+}

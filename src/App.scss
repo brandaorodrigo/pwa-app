@@ -1,0 +1,10 @@
+input:-webkit-autofill,
+input:-webkit-autofill:active,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:hover,
+input:-webkit-autofill::first-line {
+    box-shadow: 0 0 0 30px var(--ant-color-bg-base) inset !important;
+    color: var(--ant-color-text) !important;
+    font-family: var(--ant-font-family) !important;
+    transition: background-color 5000s ease-in-out 0s !important;
+}
