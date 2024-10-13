@@ -1,21 +1,19 @@
 import { App, Button, Card, Col, Form, Input, Row } from 'antd';
 import axios from 'axios';
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const Login = () => {
     const [loading, setLoading] = useState(false);
-    const navigate = useNavigate();
     const { message } = App.useApp();
 
     const onFinish = (values: any) => {
         setLoading(true);
         axios
             .post('login', values)
-            .then(({ data }) => {
-                window.localStorage.setItem('token', data?.token);
-                window.localStorage.setItem('auth', JSON.stringify(values));
-                navigate('/dashboard');
+            .then(() => {
+                window.localStorage.setItem('token', btoa(`${values.login}:${values.password}`));
+                window.location.href = '/';
             })
             .catch(() => {
                 message.error({ content: 'Usuário ou senha incorretos' });
@@ -49,11 +47,9 @@ const Login = () => {
                         <Form.Item name='login' rules={[{ required: true }]}>
                             <Input placeholder='Usuário' />
                         </Form.Item>
-
                         <Form.Item name='password' rules={[{ required: true }]}>
                             <Input.Password placeholder='Senha' />
                         </Form.Item>
-
                         <Form.Item>
                             <Button type='primary' htmlType='submit' block loading={loading}>
                                 Entrar

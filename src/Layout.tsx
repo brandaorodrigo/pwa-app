@@ -28,7 +28,7 @@ const Outlet: React.FC = () => {
                     colorPrimary: primary,
                     colorBgLayout: '#fff',
                     colorText: text,
-                    colorLink: text,
+                    colorLink: secondary,
                     controlHeightLG: 42,
                     boxShadow: 'none',
                     controlHeightSM: 24,

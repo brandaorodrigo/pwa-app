@@ -1,12 +1,16 @@
-import { Col, Row, Table, Tabs } from 'antd';
+import { App, Col, Row, Table, Tabs } from 'antd';
+import axios from 'axios';
 import type React from 'react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { MdLogout } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
 
 const Dashboard: React.FC = () => {
     const [selectedPeriod, setSelectedPeriod] = useState('Ontem');
     const navigate = useNavigate();
+    const [loading, setLoading] = useState(true);
+    const [data, setData] = useState<any>();
+    const { message } = App.useApp();
 
     const handleTabChange = (key: string) => {
         setSelectedPeriod(key);
@@ -16,6 +20,38 @@ const Dashboard: React.FC = () => {
         window.localStorage.clear();
         navigate('/');
     };
+
+    useEffect(() => {
+        const fetchData = async () => {
+            setLoading(true);
+            const endpoints = [
+                '/empresa/todas/ontem',
+                '/empresa/todas/hoje',
+                '/empresa/todas/mes',
+                '/empresa/todas/ano',
+            ];
+
+            try {
+                const [ontem, hoje, mes, ano] = await axios.all(
+                    endpoints.map((url) => axios.get(url)),
+                );
+
+                const data = {} as any;
+
+                data.ontem = ontem.data;
+                data.hoje = hoje.data;
+                data.mes = mes.data;
+                data.ano = ano.data;
+
+                setData(data);
+            } catch (error) {
+                message.error({ content: 'Ocorreu um erro inesperado' });
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchData();
+    }, []);
 
     const periods = ['Ontem', 'Hoje', 'Mês', 'Ano'];
 
@@ -39,30 +75,6 @@ const Dashboard: React.FC = () => {
             title: '%',
             dataIndex: 'growth',
             key: 'growth',
-        },
-    ];
-
-    const data = [
-        {
-            key: '1',
-            name: 'Shopping Center A',
-            visitors: 1000,
-            sales: 50000,
-            growth: '5%',
-        },
-        {
-            key: '2',
-            name: 'Shopping Center B',
-            visitors: 1200,
-            sales: 55000,
-            growth: '4%',
-        },
-        {
-            key: '3',
-            name: 'Shopping Center C',
-            visitors: 1100,
-            sales: 52000,
-            growth: '3%',
         },
     ];
 
@@ -95,19 +107,23 @@ const Dashboard: React.FC = () => {
                         />
                     </Col>
                 </Row>
-                <Tabs defaultActiveKey={selectedPeriod} onChange={handleTabChange} centered>
-                    {periods.map((period) => (
-                        <Tabs.TabPane tab={period} key={period}>
-                            <Table
-                                columns={columns}
-                                dataSource={data}
-                                pagination={false}
-                                scroll={{ x: true }}
-                                size='small'
-                            />
-                        </Tabs.TabPane>
-                    ))}
-                </Tabs>
+                {loading ? (
+                    <div className='loading' />
+                ) : (
+                    <Tabs defaultActiveKey={selectedPeriod} onChange={handleTabChange} centered>
+                        {periods.map((period) => (
+                            <Tabs.TabPane tab={period} key={period}>
+                                <Table
+                                    columns={columns}
+                                    dataSource={data?.[period] || []}
+                                    pagination={false}
+                                    scroll={{ x: true }}
+                                    size='small'
+                                />
+                            </Tabs.TabPane>
+                        ))}
+                    </Tabs>
+                )}
             </Col>
         </Row>
     );
