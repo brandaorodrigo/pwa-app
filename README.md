@@ -1,4 +1,4 @@
-# maisfluxo-app
+# pwa-app
 
     const data = [
         {
