@@ -1,4 +1,4 @@
-import { App, Button, Card, Col, Form, Input, Row } from 'antd';
+import { App, Button, Col, Form, Input, Row } from 'antd';
 import axios from 'axios';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -28,7 +28,7 @@ const Login = () => {
             style={{
                 height: 'calc(100vh - 30px)',
                 margin: '0 auto',
-                maxWidth: 300,
+                maxWidth: 240,
                 width: 'calc(100dvw - 30px)',
             }}
         >
@@ -42,27 +42,27 @@ const Login = () => {
                 >
                     <img src='/logo_dark.png' alt='Mais Fluxo' style={{ width: '200px' }} />
                 </Col>
-                <Card>
-                    <Form onFinish={onFinish} style={{ margin: '0 0 -20px 0' }}>
-                        <Form.Item name='login' rules={[{ required: true }]}>
-                            <Input placeholder='Usuário' />
-                        </Form.Item>
-                        <Form.Item name='password' rules={[{ required: true }]}>
-                            <Input.Password placeholder='Senha' />
-                        </Form.Item>
-                        <Form.Item>
-                            <Button type='primary' htmlType='submit' block loading={loading}>
-                                Entrar
-                            </Button>
-                        </Form.Item>
-                    </Form>
-                </Card>
+
+                <Form onFinish={onFinish} style={{ margin: '0 0 -20px 0' }}>
+                    <Form.Item name='login' rules={[{ required: true }]}>
+                        <Input placeholder='Usuário' />
+                    </Form.Item>
+                    <Form.Item name='password' rules={[{ required: true }]}>
+                        <Input.Password placeholder='Senha' />
+                    </Form.Item>
+                    <Form.Item>
+                        <Button type='primary' htmlType='submit' block loading={loading}>
+                            Entrar
+                        </Button>
+                    </Form.Item>
+                </Form>
+
                 <Link
                     to='https://maisfluxo.com.br/politica-de-privacidade'
                     target='_blank'
                     style={{
                         textAlign: 'center',
-                        margin: '20px 0 0 0',
+                        margin: '50px 0 0 0',
                         display: 'block',
                         fontSize: '14px',
                         opacity: 0.7,

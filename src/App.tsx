@@ -10,12 +10,23 @@ import Login from './Login';
 // axios -------------------------------------------------------------------------------------------
 
 axios.defaults.baseURL = 'https://mfweb.maisfluxo.com.br/MaisFluxoServidorWEB/rest';
+axios.defaults.baseURL = 'https://mfas02.maisfluxo.com.br/MaisFluxoServidorWEB/rest';
 
 const token = window.localStorage.getItem('token');
 
 if (token) {
     axios.defaults.headers.common.Authorization = `Basic ${token}`;
 }
+
+// mock --------------------------------------------------------------------------------------------
+
+axios.interceptors.request.use((config) => {
+    const url = new URL(window.location.href);
+    const base = `${url.pathname.split('/')[0]}/mock`;
+    config.baseURL = base;
+    config.url = config.url ? `${config.url.replace(/[/?]/g, '_')}.json` : undefined;
+    return config;
+});
 
 // routes ------------------------------------------------------------------------------------------
 

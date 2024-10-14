@@ -1,0 +1,23 @@
+{
+    "lista": [
+        {
+            "nome": "CJN",
+            "valor": null,
+            "comparacaoAno": null,
+            "comparacaoMes": null
+        },
+        {
+            "nome": "ELA",
+            "valor": null,
+            "comparacaoAno": null,
+            "comparacaoMes": null
+        },
+        {
+            "nome": "PSS",
+            "valor": null,
+            "comparacaoAno": null,
+            "comparacaoMes": null
+        }
+    ],
+    "acabou": true
+}

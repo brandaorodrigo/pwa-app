@@ -1,0 +1,23 @@
+{
+    "lista": [
+        {
+            "nome": "CJN",
+            "valor": 3084,
+            "comparacaoAno": "-91,83%",
+            "comparacaoMes": "-92,77%"
+        },
+        {
+            "nome": "ELA",
+            "valor": 36,
+            "comparacaoAno": "-99,80%",
+            "comparacaoMes": "-99,78%"
+        },
+        {
+            "nome": "PSS",
+            "valor": 1654,
+            "comparacaoAno": "-91,01%",
+            "comparacaoMes": "-92,74%"
+        }
+    ],
+    "acabou": true
+}

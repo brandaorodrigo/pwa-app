@@ -2,12 +2,11 @@ import { App, Col, Row, Table, Tabs } from 'antd';
 import axios from 'axios';
 import type React from 'react';
 import { useEffect, useState } from 'react';
+import { FaArrowDownLong, FaArrowUpLong } from 'react-icons/fa6';
 import { MdLogout } from 'react-icons/md';
-import { useNavigate } from 'react-router-dom';
 
 const Dashboard: React.FC = () => {
     const [selectedPeriod, setSelectedPeriod] = useState('Ontem');
-    const navigate = useNavigate();
     const [loading, setLoading] = useState(true);
     const [data, setData] = useState<any>();
     const { message } = App.useApp();
@@ -18,17 +17,17 @@ const Dashboard: React.FC = () => {
 
     const logout = () => {
         window.localStorage.clear();
-        navigate('/');
+        window.location.href = '/';
     };
 
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true);
             const endpoints = [
-                '/empresa/todas/ontem',
-                '/empresa/todas/hoje',
-                '/empresa/todas/mes',
-                '/empresa/todas/ano',
+                'empresa/todas/ontem',
+                'empresa/todas/hoje',
+                'empresa/todas/mes',
+                'empresa/todas/ano',
             ];
 
             try {
@@ -38,11 +37,10 @@ const Dashboard: React.FC = () => {
 
                 const data = {} as any;
 
-                data.ontem = ontem.data;
-                data.hoje = hoje.data;
-                data.mes = mes.data;
-                data.ano = ano.data;
-
+                data.Ontem = ontem.data.lista;
+                data.Hoje = hoje.data.lista;
+                data.Mês = mes.data.lista;
+                data.Ano = ano.data.lista;
                 setData(data);
             } catch (error) {
                 message.error({ content: 'Ocorreu um erro inesperado' });
@@ -53,28 +51,58 @@ const Dashboard: React.FC = () => {
         fetchData();
     }, []);
 
+    const calculate = (value: string) => {
+        if (value) {
+            const down = value.startsWith('-');
+            return (
+                <span
+                    style={{
+                        color: down ? 'var(--ant-red)' : 'var(--ant-color-link)',
+                    }}
+                >
+                    {down ? (
+                        <FaArrowDownLong
+                            size={15}
+                            style={{ margin: '5px 5px 0 0', float: 'left' }}
+                        />
+                    ) : (
+                        <FaArrowUpLong size={15} style={{ margin: '5px 5px 0 0', float: 'left' }} />
+                    )}
+                    {value}
+                </span>
+            );
+        }
+        return '';
+    };
+
     const periods = ['Ontem', 'Hoje', 'Mês', 'Ano'];
 
     const columns = [
         {
             title: 'Nome',
-            dataIndex: 'name',
-            key: 'name',
+            dataIndex: 'nome',
+            key: 'nome',
         },
         {
-            title: 'Pessoas',
-            dataIndex: 'visitors',
-            key: 'visitors',
+            title: 'Valor',
+            dataIndex: 'valor',
+            key: 'valor',
         },
+        ...(selectedPeriod !== 'Ano'
+            ? [
+                  {
+                      title: 'Mês',
+                      dataIndex: 'comparacaoMes',
+                      key: 'comparacaoMes',
+                      render: calculate,
+                  },
+              ]
+            : []),
         {
-            title: 'R$',
-            dataIndex: 'sales',
-            key: 'sales',
-        },
-        {
-            title: '%',
-            dataIndex: 'growth',
-            key: 'growth',
+            title: 'Ano',
+            dataIndex: 'comparacaoAno',
+            key: 'comparacaoAno',
+            render: calculate,
         },
     ];
 
