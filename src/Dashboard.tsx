@@ -2,7 +2,7 @@ import { App, Col, Row, Table, Tabs } from 'antd';
 import axios from 'axios';
 import type React from 'react';
 import { useEffect, useState } from 'react';
-import { FaArrowDownLong, FaArrowUpLong } from 'react-icons/fa6';
+import { FaArrowDown, FaArrowUp } from 'react-icons/fa6';
 import { MdLogout } from 'react-icons/md';
 
 const Dashboard: React.FC = () => {
@@ -61,12 +61,9 @@ const Dashboard: React.FC = () => {
                     }}
                 >
                     {down ? (
-                        <FaArrowDownLong
-                            size={15}
-                            style={{ margin: '5px 5px 0 0', float: 'left' }}
-                        />
+                        <FaArrowDown size={16} style={{ margin: '3px 5px 0 0', float: 'left' }} />
                     ) : (
-                        <FaArrowUpLong size={15} style={{ margin: '5px 5px 0 0', float: 'left' }} />
+                        <FaArrowUp size={16} style={{ margin: '3px 5px 0 0', float: 'left' }} />
                     )}
                     {value}
                 </span>
@@ -95,6 +92,7 @@ const Dashboard: React.FC = () => {
                       dataIndex: 'comparacaoMes',
                       key: 'comparacaoMes',
                       render: calculate,
+                      width: '105px',
                   },
               ]
             : []),
@@ -103,6 +101,7 @@ const Dashboard: React.FC = () => {
             dataIndex: 'comparacaoAno',
             key: 'comparacaoAno',
             render: calculate,
+            width: '105px',
         },
     ];
 
@@ -112,8 +111,7 @@ const Dashboard: React.FC = () => {
             align='middle'
             style={{
                 margin: '0 auto',
-                padding: '15px',
-                width: 'calc(100dvw - 30px)',
+                width: 'calc(100dvw - 20px)',
             }}
         >
             <Col span={24}>
@@ -129,7 +127,7 @@ const Dashboard: React.FC = () => {
                             style={{
                                 cursor: 'pointer',
                                 display: 'block',
-                                float: 'right',
+                                float: 'left',
                                 margin: '10px 0',
                             }}
                         />
@@ -146,7 +144,6 @@ const Dashboard: React.FC = () => {
                                     dataSource={data?.[period] || []}
                                     pagination={false}
                                     scroll={{ x: true }}
-                                    size='small'
                                 />
                             </Tabs.TabPane>
                         ))}

@@ -28,3 +28,18 @@ input:-webkit-autofill::first-line {
     animation: spin 1s linear infinite;
     margin: 20px auto;
 }
+
+.nolabel .ant-form-item-label {
+    display: none !important;
+}
+
+td.ant-table-cell.nowrap {
+    white-space: nowrap;
+}
+
+thead>tr>th,
+thead>tr>td {
+    &::before {
+        display: none;
+    }
+}

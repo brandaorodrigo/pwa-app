@@ -43,11 +43,21 @@ const Login = () => {
                     <img src='/logo_dark.png' alt='Mais Fluxo' style={{ width: '200px' }} />
                 </Col>
 
-                <Form onFinish={onFinish} style={{ margin: '0 0 -20px 0' }}>
-                    <Form.Item name='login' rules={[{ required: true }]}>
+                <Form onFinish={onFinish} style={{ margin: '0 0 -20px 0' }} layout='vertical'>
+                    <Form.Item
+                        name='login'
+                        label='Usuário'
+                        className='nolabel'
+                        rules={[{ required: true }]}
+                    >
                         <Input placeholder='Usuário' />
                     </Form.Item>
-                    <Form.Item name='password' rules={[{ required: true }]}>
+                    <Form.Item
+                        name='password'
+                        label='Senha'
+                        className='nolabel'
+                        rules={[{ required: true }]}
+                    >
                         <Input.Password placeholder='Senha' />
                     </Form.Item>
                     <Form.Item>

@@ -5,6 +5,8 @@ const Outlet: React.FC = () => {
     const text = '#222222';
     const primary = '#132638';
     const secondary = '#1e8675';
+    const red = '#da8694';
+    const white = '#ffffff';
 
     return (
         <ConfigProvider
@@ -21,20 +23,26 @@ const Outlet: React.FC = () => {
                         colorPrimaryBorderHover: secondary,
                         colorPrimaryHover: secondary,
                     },
+                    Table: {
+                        cellPaddingBlock: 12,
+                        cellPaddingInline: 0,
+                        headerBg: white,
+                    },
                 },
                 token: {
                     borderRadius: 10,
                     controlHeight: 42,
                     colorPrimary: primary,
-                    colorBgLayout: '#fff',
+                    colorBgLayout: white,
                     colorText: text,
                     colorLink: secondary,
                     controlHeightLG: 42,
                     boxShadow: 'none',
                     controlHeightSM: 24,
+                    colorError: red,
                     fontFamily: 'Nunito',
                     fontSize: 15,
-                    red: '#da8694',
+                    red: red,
                     fontSizeLG: 17,
                     fontSizeSM: 21,
                     lineWidth: 2,
