@@ -4,6 +4,7 @@ import type React from 'react';
 import { useEffect, useState } from 'react';
 import { FaArrowDown, FaArrowUp } from 'react-icons/fa6';
 import { MdLogout } from 'react-icons/md';
+import { baseURL } from './App';
 
 const Dashboard: React.FC = () => {
     const [selectedPeriod, setSelectedPeriod] = useState('Ontem');
@@ -24,10 +25,10 @@ const Dashboard: React.FC = () => {
         const fetchData = async () => {
             setLoading(true);
             const endpoints = [
-                'https://app.maisfluxo.com.br/proxy.php?endpoint=empresa/todas/ontem',
-                'https://app.maisfluxo.com.br/proxy.php?endpoint=empresa/todas/hoje',
-                'https://app.maisfluxo.com.br/proxy.php?endpoint=empresa/todas/mes',
-                'https://app.maisfluxo.com.br/proxy.php?endpoint=empresa/todas/ano',
+                `${baseURL}empresa/todas/ontem`,
+                `${baseURL}empresa/todas/hoje`,
+                `${baseURL}empresa/todas/mes`,
+                `${baseURL}empresa/todas/ano`,
             ];
 
             try {

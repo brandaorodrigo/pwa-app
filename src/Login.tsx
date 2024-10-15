@@ -2,6 +2,7 @@ import { App, Button, Col, Form, Input, Row } from 'antd';
 import axios from 'axios';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { baseURL } from './App';
 
 const Login = () => {
     const [loading, setLoading] = useState(false);
@@ -10,7 +11,7 @@ const Login = () => {
     const onFinish = (values: any) => {
         setLoading(true);
         axios
-            .post('https://app.maisfluxo.com.br/proxy.php?endpoint=login', values)
+            .post(`${baseURL}login`, values)
             .then(() => {
                 window.localStorage.setItem('token', btoa(`${values.login}:${values.password}`));
                 window.location.href = '/';

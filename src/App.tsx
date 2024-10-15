@@ -11,7 +11,10 @@ import Login from './Login';
 
 // axios.defaults.baseURL = 'https://mfweb.maisfluxo.com.br/MaisFluxoServidorWEB/rest';
 // axios.defaults.baseURL = 'https://mfas02.maisfluxo.com.br/MaisFluxoServidorWEB/rest';
-// axios.defaults.baseURL = 'https://app.maisfluxo.com.br';
+
+const baseURL = 'https://app.maisfluxo.com.br/proxy.php?endpoint=';
+
+export { baseURL };
 
 const token = window.localStorage.getItem('token');
 
