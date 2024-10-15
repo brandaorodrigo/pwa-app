@@ -24,10 +24,10 @@ const Dashboard: React.FC = () => {
         const fetchData = async () => {
             setLoading(true);
             const endpoints = [
-                'empresa/todas/ontem',
-                'empresa/todas/hoje',
-                'empresa/todas/mes',
-                'empresa/todas/ano',
+                'https://app.maisfluxo.com.br/proxy.php?endpoint=empresa/todas/ontem',
+                'https://app.maisfluxo.com.br/proxy.php?endpoint=empresa/todas/hoje',
+                'https://app.maisfluxo.com.br/proxy.php?endpoint=empresa/todas/mes',
+                'https://app.maisfluxo.com.br/proxy.php?endpoint=empresa/todas/ano',
             ];
 
             try {

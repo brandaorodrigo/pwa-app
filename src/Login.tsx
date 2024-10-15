@@ -10,7 +10,7 @@ const Login = () => {
     const onFinish = (values: any) => {
         setLoading(true);
         axios
-            .post('login', values)
+            .post('https://app.maisfluxo.com.br/proxy.php?endpoint=login', values)
             .then(() => {
                 window.localStorage.setItem('token', btoa(`${values.login}:${values.password}`));
                 window.location.href = '/';
