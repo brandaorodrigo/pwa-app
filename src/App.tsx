@@ -24,7 +24,6 @@ if (token) {
 
 // mock --------------------------------------------------------------------------------------------
 
-/*
 axios.interceptors.request.use((config) => {
     const url = new URL(window.location.href);
     const base = `${url.pathname.split('/')[0]}/mock`;
@@ -32,7 +31,6 @@ axios.interceptors.request.use((config) => {
     config.url = config.url ? `${config.url.replace(/[/?]/g, '_')}.json` : undefined;
     return config;
 });
-*/
 
 // routes ------------------------------------------------------------------------------------------
 
