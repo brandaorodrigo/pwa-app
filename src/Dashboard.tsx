@@ -1,4 +1,4 @@
-import { App, Col, Row, Table, Tabs } from 'antd';
+import { App, Button, Col, Row, Table, Tabs } from 'antd';
 import axios from 'axios';
 import type React from 'react';
 import { useEffect, useState } from 'react';
@@ -8,6 +8,7 @@ import { baseURL } from './App';
 
 const Dashboard: React.FC = () => {
     const [selectedPeriod, setSelectedPeriod] = useState('Hoje');
+    const [error, setError] = useState(false);
     const [loading, setLoading] = useState(true);
     const [data, setData] = useState<any>();
     const { message } = App.useApp();
@@ -45,6 +46,7 @@ const Dashboard: React.FC = () => {
                 setData(data);
             } catch (error) {
                 message.error({ content: 'Ocorreu um erro inesperado' });
+                setError(true);
             } finally {
                 setLoading(false);
             }
@@ -82,7 +84,7 @@ const Dashboard: React.FC = () => {
             key: 'nome',
         },
         {
-            title: 'Qtd.',
+            title: 'Qtde.',
             dataIndex: 'valor',
             key: 'valor',
         },
@@ -138,6 +140,8 @@ const Dashboard: React.FC = () => {
                 </Row>
                 {loading ? (
                     <div className='loading' />
+                ) : error ? (
+                    <Button onClick={() => window.location.reload()}>Recarregar</Button>
                 ) : (
                     <Tabs defaultActiveKey={selectedPeriod} onChange={handleTabChange} centered>
                         {periods.map((period) => (
