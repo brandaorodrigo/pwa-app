@@ -7,7 +7,7 @@ import { MdLogout } from 'react-icons/md';
 import { baseURL } from './App';
 
 const Dashboard: React.FC = () => {
-    const [selectedPeriod, setSelectedPeriod] = useState('Ontem');
+    const [selectedPeriod, setSelectedPeriod] = useState('Hoje');
     const [loading, setLoading] = useState(true);
     const [data, setData] = useState<any>();
     const { message } = App.useApp();
@@ -73,7 +73,7 @@ const Dashboard: React.FC = () => {
         return '';
     };
 
-    const periods = ['Ontem', 'Hoje', 'Mês', 'Ano'];
+    const periods = ['Hoje', 'Ontem', 'Mês', 'Ano'];
 
     const columns = [
         {
@@ -82,13 +82,14 @@ const Dashboard: React.FC = () => {
             key: 'nome',
         },
         {
-            title: 'Valor',
+            title: 'Qtd.',
             dataIndex: 'valor',
             key: 'valor',
         },
         ...(selectedPeriod !== 'Ano'
             ? [
                   {
+                      align: 'center',
                       title: 'Mês',
                       dataIndex: 'comparacaoMes',
                       key: 'comparacaoMes',
@@ -98,6 +99,7 @@ const Dashboard: React.FC = () => {
               ]
             : []),
         {
+            align: 'center',
             title: 'Ano',
             dataIndex: 'comparacaoAno',
             key: 'comparacaoAno',
@@ -141,7 +143,7 @@ const Dashboard: React.FC = () => {
                         {periods.map((period) => (
                             <Tabs.TabPane tab={period} key={period}>
                                 <Table
-                                    columns={columns}
+                                    columns={columns as any}
                                     dataSource={data?.[period] || []}
                                     pagination={false}
                                     scroll={{ x: true }}
