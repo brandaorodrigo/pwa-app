@@ -79,7 +79,7 @@ const Dashboard: React.FC = () => {
 
     const columns = [
         {
-            title: 'Nome',
+            title: '',
             dataIndex: 'nome',
             key: 'nome',
         },
