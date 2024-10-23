@@ -9,41 +9,50 @@ import { baseURL } from './App';
 const Dashboard: React.FC = () => {
     const [selectedPeriod, setSelectedPeriod] = useState('Hoje');
     const [error, setError] = useState(false);
-    const [loading, setLoading] = useState(false);
-    const [data, setData] = useState<any>({});
+    const [loading, setLoading] = useState(true);
+    const [data, setData] = useState<any>();
     const { message } = App.useApp();
-
-    const fetchData = async (period: string) => {
-        setLoading(true);
-        const endpointMap: Record<string, string> = {
-            Ontem: `${baseURL}empresa/todas/ontem`,
-            Hoje: `${baseURL}empresa/todas/hoje`,
-            Mês: `${baseURL}empresa/todas/mes`,
-            Ano: `${baseURL}empresa/todas/ano`,
-        };
-
-        try {
-            const response = await axios.get(endpointMap[period]);
-            setData((prevData: any) => ({ ...prevData, [period]: response.data.lista }));
-        } catch (error) {
-            message.error({ content: 'Ocorreu um erro inesperado' });
-            setError(true);
-        } finally {
-            setLoading(false);
-        }
-    };
 
     const handleTabChange = (key: string) => {
         setSelectedPeriod(key);
-        if (!data[key]) {
-            fetchData(key);
-        }
     };
 
     const logout = () => {
         window.localStorage.clear();
         window.location.href = '/';
     };
+
+    useEffect(() => {
+        const fetchData = async () => {
+            setLoading(true);
+            const endpoints = [
+                `${baseURL}empresa/todas/ontem`,
+                `${baseURL}empresa/todas/hoje`,
+                `${baseURL}empresa/todas/mes`,
+                `${baseURL}empresa/todas/ano`,
+            ];
+
+            try {
+                const [ontem, hoje, mes, ano] = await axios.all(
+                    endpoints.map((url) => axios.get(url)),
+                );
+
+                const data = {} as any;
+
+                data.Ontem = ontem.data.lista;
+                data.Hoje = hoje.data.lista;
+                data.Mês = mes.data.lista;
+                data.Ano = ano.data.lista;
+                setData(data);
+            } catch (error) {
+                message.error({ content: 'Ocorreu um erro inesperado' });
+                setError(true);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchData();
+    }, []);
 
     const calculate = (value: string) => {
         if (value) {
@@ -101,10 +110,6 @@ const Dashboard: React.FC = () => {
         },
     ];
 
-    useEffect(() => {
-        fetchData('Hoje'); // Carrega os dados iniciais para a aba 'Hoje'
-    }, []);
-
     return (
         <Row
             justify='center'
@@ -133,26 +138,23 @@ const Dashboard: React.FC = () => {
                         />
                     </Col>
                 </Row>
-
-                {/* Abas sempre visíveis */}
-                <Tabs defaultActiveKey={selectedPeriod} onChange={handleTabChange} centered>
-                    {periods.map((period) => (
-                        <Tabs.TabPane tab={period} key={period} />
-                    ))}
-                </Tabs>
-
-                {/* Conteúdo abaixo das abas */}
                 {loading ? (
                     <div className='loading' />
                 ) : error ? (
                     <Button onClick={() => window.location.reload()}>Recarregar</Button>
                 ) : (
-                    <Table
-                        columns={columns as any}
-                        dataSource={data?.[selectedPeriod] || []}
-                        pagination={false}
-                        scroll={{ x: true }}
-                    />
+                    <Tabs defaultActiveKey={selectedPeriod} onChange={handleTabChange} centered>
+                        {periods.map((period) => (
+                            <Tabs.TabPane tab={period} key={period}>
+                                <Table
+                                    columns={columns as any}
+                                    dataSource={data?.[period] || []}
+                                    pagination={false}
+                                    scroll={{ x: true }}
+                                />
+                            </Tabs.TabPane>
+                        ))}
+                    </Tabs>
                 )}
             </Col>
         </Row>
