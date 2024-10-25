@@ -35,9 +35,7 @@ const Dashboard: React.FC = () => {
 
     const handleTabChange = (key: string) => {
         setSelectedPeriod(key);
-        if (!data[key]) {
-            fetchData(key);
-        }
+        fetchData(key);
     };
 
     const logout = () => {
