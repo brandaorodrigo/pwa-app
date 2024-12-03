@@ -17,11 +17,43 @@ const baseURL = 'https://app.maisfluxo.com.br/proxy.php?endpoint=';
 
 export { baseURL };
 
+// token -------------------------------------------------------------------------------------------
+
 const token = window.localStorage.getItem('token');
+const type = window.localStorage.getItem('type');
 
 if (token) {
-    axios.defaults.headers.common.Authorization = `Basic ${token}`;
+    if (type === 'Authorization') {
+        axios.defaults.headers.common.Authorization = `Basic ${token}`;
+    }
+    if (type === 'GoogleToken') {
+        axios.defaults.headers.common.GoogleToken = token;
+    }
 }
+
+// axios -------------------------------------------------------------------------------------------
+
+axios.interceptors.response.use(
+    async (response) => {
+        if (response.status === 202) {
+            return axios(response.config);
+        }
+
+        if (response?.status === 200 && typeof response?.data !== 'object') {
+            response.data = {};
+        }
+
+        return response;
+    },
+    async (error) => {
+        if (error?.response?.status === 403) {
+            window.localStorage.clear();
+            window.location.href = '/';
+        }
+        const message = error?.response?.data?.message;
+        throw message ? message.replace('ServiceException: ', '') : 'Ocorreu um erro inesperado';
+    },
+);
 
 // mock --------------------------------------------------------------------------------------------
 

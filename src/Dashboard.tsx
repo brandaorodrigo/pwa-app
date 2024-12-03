@@ -26,7 +26,7 @@ const Dashboard: React.FC = () => {
             const response = await axios.get(endpointMap[period]);
             setData((prevData: any) => ({ ...prevData, [period]: response.data.lista }));
         } catch (error) {
-            message.error({ content: 'Ocorreu um erro inesperado' });
+            message.error({ content: String(error) });
             setError(true);
         } finally {
             setLoading(false);

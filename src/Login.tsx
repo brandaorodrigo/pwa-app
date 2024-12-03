@@ -15,6 +15,7 @@ const Login = () => {
             .post(`${baseURL}login`, values)
             .then(() => {
                 window.localStorage.setItem('token', btoa(`${values.login}:${values.password}`));
+                window.localStorage.setItem('type', 'Authorization');
                 window.location.href = '/';
             })
             .catch(() => {

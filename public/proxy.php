@@ -51,11 +51,20 @@ switch ($http_method) {
         break;
 }
 
-curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+$headers = array(
     'Accept: application/json',
-    'Authorization: ' . $_SERVER['HTTP_AUTHORIZATION'],
     'Content-Type: application/json',
-));
+);
+
+if ('Authorization: ' . $_SERVER['HTTP_AUTHORIZATION']) {
+    $headers[] = 'Authorization: ' . $_SERVER['HTTP_AUTHORIZATION'];
+}
+
+if ($_SERVER['HTTP_GOOGLETOKEN']) {
+    $headers[] = 'GoogleToken: ' . $_SERVER['HTTP_GOOGLETOKEN'];
+}
+
+curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 
 $response = curl_exec($ch);
 $error = curl_error($ch);
