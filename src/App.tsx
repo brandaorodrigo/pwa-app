@@ -4,6 +4,7 @@ import './App.scss';
 import axios from 'axios';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import Dashboard from './Dashboard';
+import Google from './Google';
 import Layout from './Layout';
 import Login from './Login';
 
@@ -38,7 +39,10 @@ axios.interceptors.request.use((config) => {
 
 const routePrivate = [{ path: '', element: <Dashboard /> }];
 
-const routePublic = [{ path: '', element: <Login /> }];
+const routePublic = [
+    { path: '', element: <Login /> },
+    { path: 'google', element: <Google /> },
+];
 
 const route = [
     {

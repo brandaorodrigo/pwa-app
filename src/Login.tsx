@@ -1,6 +1,7 @@
 import { App, Button, Col, Form, Input, Row } from 'antd';
 import axios from 'axios';
 import { useState } from 'react';
+import { FcGoogle } from 'react-icons/fc';
 import { Link } from 'react-router-dom';
 import { baseURL } from './App';
 
@@ -20,6 +21,15 @@ const Login = () => {
                 message.error({ content: 'Usuário ou senha incorretos' });
                 setLoading(false);
             });
+    };
+
+    const onGoogleLogin = () => {
+        const clientId = '507806281292-sb2plqvrn08uvei9jbatppa69s0ik4gr.apps.googleusercontent.com';
+        const redirectUri = `${window.location.origin}/google`;
+        const scope = 'profile email';
+        const responseType = 'token';
+        const url = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scope}&response_type=${responseType}`;
+        window.location.href = url;
     };
 
     return (
@@ -67,7 +77,9 @@ const Login = () => {
                         </Button>
                     </Form.Item>
                 </Form>
-
+                <Button onClick={onGoogleLogin} block style={{ marginTop: '10px' }}>
+                    <FcGoogle size={24} /> Entrar com Google
+                </Button>
                 <Link
                     to='https://maisfluxo.com.br/politica-de-privacidade'
                     target='_blank'
