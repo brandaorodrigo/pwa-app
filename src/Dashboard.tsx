@@ -73,7 +73,12 @@ const Dashboard: React.FC = () => {
             key: 'nome',
         },
         {
-            title: 'Qtde.',
+            title: (
+                <>
+                    Qtde<small>Atual</small>
+                </>
+            ),
+            align: 'center',
             dataIndex: 'valor',
             key: 'valor',
         },
@@ -81,7 +86,11 @@ const Dashboard: React.FC = () => {
             ? [
                   {
                       align: 'center',
-                      title: 'Mês',
+                      title: (
+                          <>
+                              Mês<small>Anterior</small>
+                          </>
+                      ),
                       dataIndex: 'comparacaoMes',
                       key: 'comparacaoMes',
                       render: calculate,
@@ -91,7 +100,11 @@ const Dashboard: React.FC = () => {
             : []),
         {
             align: 'center',
-            title: 'Ano',
+            title: (
+                <>
+                    Ano<small>Anterior</small>
+                </>
+            ),
             dataIndex: 'comparacaoAno',
             key: 'comparacaoAno',
             render: calculate,
